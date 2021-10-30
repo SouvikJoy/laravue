@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Database\Eloquent\Model;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -102,8 +103,8 @@ class ProductsController extends Controller
 
     private function upload(Request $request)
     {
-        $imageName = \CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary::upload($request->file('image')->getRealPath())->getSecurePath();
-
-        return $imageName;
+        return Cloudinary::upload($request->file('image')->getRealPath(), [
+            'folder' => 'Products'
+        ])->getSecurePath();
     }
 }

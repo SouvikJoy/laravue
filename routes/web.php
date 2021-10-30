@@ -33,7 +33,7 @@ Route::get('upload', function () {
 });
 
 Route::post('upload', function (\Illuminate\Http\Request $request) {
-    $uploadedFileUrl = \CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary::upload($request->file('file')->getRealPath())->getSecurePath();
+    $uploadedFileUrl = \CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary::upload($request->file('file')->getRealPath());
     dd($uploadedFileUrl);
 });
 
