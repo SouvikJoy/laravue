@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Post;
+use App\Models\Category;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
-class PostsController extends Controller
+class CategoriesController extends Controller
 {
     public function __construct()
     {
@@ -16,40 +16,40 @@ class PostsController extends Controller
 
     public function index()
     {
-        return Inertia::render('Posts/Index', [
-            "posts" => Post::orderBy('id', 'DESC')->paginate(10)
+        return Inertia::render('Categories/Index', [
+            "categories" => Category::orderBy('id', 'DESC')->paginate(10)
         ]);
     }
 
     public function create()
     {
-        return Inertia::render('Posts/Create');
+        return Inertia::render('Categories/Create');
     }
 
     public function store(Request $request)
     {
         $this->getValidate($request);
 
-        $post = new Post();
+        $category = new Category;
 
-        $post->title = $request->input('title');
-        $post->content = $request->input('content');
+        $category->title = $request->input('title');
+        $category->content = $request->input('content');
 
         if($request->file('image')) {
-            $post->image = $this->upload($request);
+            $category->image = $this->upload($request);
         }
 
-        $post->save();
+        $category->save();
 
-        $request->session()->flash('success', 'Post created successfully!');
+        $request->session()->flash('success', 'Category created successfully!');
 
-        return redirect()->route('post.index');
+        return redirect()->route('category.index');
     }
 
     public function edit($id)
     {
-        return Inertia::render('Posts/Edit', [
-            'post' => Post::findOrFail($id)
+        return Inertia::render('Categories/Edit', [
+            'category' => Category::findOrFail($id)
         ]);
     }
 
@@ -57,29 +57,29 @@ class PostsController extends Controller
     {
         $this->getValidate($request, $id);
 
-        $post = Post::find($id);
+        $category = Category::find($id);
 
-        $post->title = $request->input('title');
-        $post->content = $request->input('content');
+        $category->title = $request->input('title');
+        $category->content = $request->input('content');
 
         if($request->file('image')) {
-            $post->image = $this->upload($request);
+            $category->image = $this->upload($request);
         }
 
-        $post->save();
+        $category->save();
 
-        $request->session()->flash('success', 'Post updated successfully!');
+        $request->session()->flash('success', 'Category updated successfully!');
 
-        return redirect()->route('post.index');
+        return redirect()->route('category.index');
     }
 
     public function destroy(Request $request, $id)
     {
-        Post::find($id)->delete();
+        Category::find($id)->delete();
 
-        $request->session()->flash('success', 'Post deleted successfully!');
+        $request->session()->flash('success', 'Category deleted successfully!');
 
-        return redirect()->route('post.index');
+        return redirect()->route('category.index');
     }
 
     /**

@@ -7,6 +7,10 @@
 
                 <errors-and-messages :errors="errors"></errors-and-messages>
 
+                <div class="nav-item">
+                    <inertia-link :href="$route('post.create')" class="nav-link">Create Post</inertia-link>
+                </div>
+
                 <div v-if="posts.data.length > 0">
 
                     <div class="col-md-10 article" v-for="post in posts.data" :key="post.id">

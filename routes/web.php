@@ -3,7 +3,11 @@
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\PostsController;
+use App\Http\Controllers\ProductsController;
+use App\Http\Controllers\CategoriesController;
+use App\Http\Controllers\SiteOptionsController;
 use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,4 +30,14 @@ Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
 Route::resource('post', PostsController::class);
 
-Route::redirect('/', 'post');
+Route::resource('product', ProductsController::class);
+
+Route::resource('category', CategoriesController::class);
+
+Route::resource('siteoption', SiteOptionsController::class);
+
+Route::middleware('auth')->get('/', function () {
+    return Inertia::render('Dashboard');
+})->name('dashboard');
+
+// Route::redirect('/', 'post');
