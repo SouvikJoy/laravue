@@ -31,8 +31,8 @@
                                     <td>{{siteoption.title}}</td>
                                     <td>{{siteoption.content}}</td>
                                     <td>
-                                        <inertia-link :href="$route('siteoption.edit', {id: siteoption.id})" class="btn btn-primary pull-right action-btn">Edit SiteOptions</inertia-link>
-                                        <a href="javascript:void(0);" class="btn btn-warning pull-right action-btn" @click.prevent="deleteSiteoption(siteoption.id)"><i class="fas fa-trash-alt"></i> Delete Product</a>
+                                        <inertia-link :href="$route('siteoption.edit', {id: siteoption.id})" class="btn btn-primary pull-right action-btn">Edit</inertia-link>
+                                        <a href="javascript:void(0);" class="btn btn-warning pull-right action-btn" @click.prevent="deleteSiteoption(siteoption.id)"><i class="fas fa-trash-alt"></i> Delete </a>
                                     </td>
                                 </tr>
                                 </tbody>

@@ -14,8 +14,13 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="content">Content</label>
-                    <textarea id="content" name="content" class="form-control" v-model="form.content"></textarea>
+                    <label for="slug">Slug</label>
+                    <input type="text" class="form-control" name="slug" id="slug" v-model="form.slug" />
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea id="description" name="description" class="form-control" v-model="form.description"></textarea>
                 </div>
 
                 <div class="form-group">
@@ -48,7 +53,8 @@ export default {
     setup() {
         const form = reactive({
             title: null,
-            content: null,
+            slug: null,
+            description: null,
             image: null,
             _token: usePage().props.value.csrf_token
         });

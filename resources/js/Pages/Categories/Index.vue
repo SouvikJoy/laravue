@@ -22,7 +22,8 @@
                                 <tr>
                                     <th scope="col">Index</th>
                                     <th scope="col">Title</th>
-                                    <th scope="col">Content</th>
+                                    <th scope="col">Slug</th>
+                                    <th scope="col">Description</th>
                                     <th scope="col">Image</th>
                                     <th scope="col" class="text-center">Actions</th>
                                 </tr>
@@ -31,7 +32,8 @@
                                 <tr v-for="(category, index) in categories.data" :key="index">
                                     <th scope="row">{{ index }}</th>
                                     <td>{{category.title}}</td>
-                                    <td>{{category.content}}</td>
+                                    <td>{{category.slug}}</td>
+                                    <td>{{category.description}}</td>
                                     <td><img v-if="category.image" width="100" height="80" :src="category.image" class="pull-left img-responsive thumb margin10 img-thumbnail"></td>
                                     <td>
                                         <inertia-link :href="$route('category.edit', {id: category.id})" class="btn btn-primary pull-right action-btn">Edit Category</inertia-link>

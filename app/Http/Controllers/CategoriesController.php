@@ -38,7 +38,8 @@ class CategoriesController extends Controller
         $category = new Category;
 
         $category->title = $request->input('title');
-        $category->content = $request->input('content');
+        $category->slug = $request->input('slug');
+        $category->description = $request->input('description');
 
         if($request->file('image')) {
             $category->image = $this->upload($request);
@@ -68,7 +69,8 @@ class CategoriesController extends Controller
         $category = Category::find($id);
 
         $category->title = $request->input('title');
-        $category->content = $request->input('content');
+        $category->slug = $request->input('slug');
+        $category->description = $request->input('description');
 
         if($request->file('image')) {
             $category->image = $this->upload($request);
@@ -99,7 +101,8 @@ class CategoriesController extends Controller
     {
         $data = [
             'title' => 'required',
-            'content' => 'required'
+            'slug' => 'required',
+            'description' => 'required'
         ];
 
         $this->validate($request, $data);

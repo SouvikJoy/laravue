@@ -7,16 +7,20 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
 
 class RegisterController extends Controller
 {
-    public function showRegisterForm()
+    public function showRegisterForm(): \Inertia\Response
     {
         return Inertia::render('Auth/Register');
     }
 
-    public function register(Request $request)
+    /**
+     * @throws ValidationException
+     */
+    public function register(Request $request): \Illuminate\Http\RedirectResponse
     {
         $this->validate($request, [
             'name' => ['required', 'max:100'],
