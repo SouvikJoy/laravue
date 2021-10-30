@@ -11,8 +11,14 @@ class Product extends Model
 
     protected $appends = ['image_url'];
 
-    function getImageUrlAttribute()
+    function getImageUrlAttribute(?array $value) : array
     {
-        return $this->image ? url('/uploads/' . $this->image) : "";
+        if (empty($value)) {
+            return [];
+        }
+        return array_map(function ($img) {
+            return \Storage::disk('cloudinary')->url($img);
+        }, $value);
     }
+
 }

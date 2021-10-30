@@ -9,11 +9,6 @@ use Inertia\Inertia;
 
 class ProductsController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware("auth");
-    }
-
     public function index()
     {
         return Inertia::render('Products/Index', [
@@ -105,13 +100,9 @@ class ProductsController extends Controller
         $this->validate($request, $data);
     }
 
-    private function upload($request)
+    private function upload(Request $request)
     {
-        $image = $request->file('image');
-
-        $imageName = md5(uniqid()) . "." . $image->getClientOriginalExtension();
-
-        $image->move(public_path('uploads'), $imageName);
+        $imageName = \CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary::upload($request->file('image')->getRealPath())->getSecurePath();
 
         return $imageName;
     }

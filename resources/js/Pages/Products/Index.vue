@@ -37,7 +37,7 @@
                                     <td>{{product.brief}}</td>
                                     <td>{{product.description}}</td>
                                     <td>{{product.price}}</td>
-                                    <td><img v-if="product.image_url" width="100" height="80" :src="product.image_url" class="pull-left img-responsive thumb margin10 img-thumbnail"></td>
+                                    <td><img v-if="product.image" width="100" height="80" :src="product.image" class="pull-left img-responsive thumb margin10 img-thumbnail"></td>
                                     <td>
                                         <inertia-link :href="$route('product.edit', {id: product.id})" class="btn btn-primary pull-right action-btn">Edit Product</inertia-link>
                                         <a href="javascript:void(0);" class="btn btn-warning pull-right action-btn" @click.prevent="deleteProduct(product.id)"><i class="fas fa-trash-alt"></i> Delete Product</a>

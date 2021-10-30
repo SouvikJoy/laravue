@@ -28,6 +28,15 @@ Route::post('register', [RegisterController::class, 'register'])->name('register
 
 Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
+Route::get('upload', function () {
+    return view('upload');
+});
+
+Route::post('upload', function (\Illuminate\Http\Request $request) {
+    $uploadedFileUrl = \CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary::upload($request->file('file')->getRealPath())->getSecurePath();
+    dd($uploadedFileUrl);
+});
+
 Route::resource('post', PostsController::class);
 
 Route::resource('product', ProductsController::class);
