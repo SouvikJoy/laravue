@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\SiteOption;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
 
 class SiteOptionsController extends Controller
@@ -14,19 +15,22 @@ class SiteOptionsController extends Controller
         $this->middleware("auth");
     }
 
-    public function index()
+    public function index(): \Inertia\Response
     {
         return Inertia::render('SiteOptions/Index', [
             "siteoptions" => SiteOption::orderBy('id', 'DESC')->paginate(10)
         ]);
     }
 
-    public function create()
+    public function create(): \Inertia\Response
     {
         return Inertia::render('SiteOptions/Create');
     }
 
-    public function store(Request $request)
+    /**
+     * @throws ValidationException
+     */
+    public function store(Request $request): \Illuminate\Http\RedirectResponse
     {
         $this->getValidate($request);
 
@@ -42,14 +46,17 @@ class SiteOptionsController extends Controller
         return redirect()->route('siteoption.index');
     }
 
-    public function edit($id)
+    public function edit($id): \Inertia\Response
     {
         return Inertia::render('SiteOptions/Edit', [
             'siteoption' => SiteOption::findOrFail($id)
         ]);
     }
 
-    public function update(Request $request, $id)
+    /**
+     * @throws ValidationException
+     */
+    public function update(Request $request, $id): \Illuminate\Http\RedirectResponse
     {
         $this->getValidate($request, $id);
 
@@ -65,7 +72,7 @@ class SiteOptionsController extends Controller
         return redirect()->route('siteoption.index');
     }
 
-    public function destroy(Request $request, $id)
+    public function destroy(Request $request, $id): \Illuminate\Http\RedirectResponse
     {
         SiteOption::find($id)->delete();
 
@@ -76,7 +83,8 @@ class SiteOptionsController extends Controller
 
     /**
      * @param Request $request
-     * @throws \Illuminate\Validation\ValidationException
+     * @param null $id
+     * @throws ValidationException
      */
     private function getValidate(Request $request, $id = null): void
     {

@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
 
 class CategoriesController extends Controller
@@ -14,19 +16,22 @@ class CategoriesController extends Controller
         $this->middleware("auth");
     }
 
-    public function index()
+    public function index(): \Inertia\Response
     {
         return Inertia::render('Categories/Index', [
             "categories" => Category::orderBy('id', 'DESC')->paginate(10)
         ]);
     }
 
-    public function create()
+    public function create(): \Inertia\Response
     {
         return Inertia::render('Categories/Create');
     }
 
-    public function store(Request $request)
+    /**
+     * @throws ValidationException
+     */
+    public function store(Request $request): \Illuminate\Http\RedirectResponse
     {
         $this->getValidate($request);
 
@@ -46,14 +51,17 @@ class CategoriesController extends Controller
         return redirect()->route('category.index');
     }
 
-    public function edit($id)
+    public function edit($id): \Inertia\Response
     {
         return Inertia::render('Categories/Edit', [
             'category' => Category::findOrFail($id)
         ]);
     }
 
-    public function update(Request $request, $id)
+    /**
+     * @throws ValidationException
+     */
+    public function update(Request $request, $id): \Illuminate\Http\RedirectResponse
     {
         $this->getValidate($request, $id);
 
@@ -73,7 +81,7 @@ class CategoriesController extends Controller
         return redirect()->route('category.index');
     }
 
-    public function destroy(Request $request, $id)
+    public function destroy(Request $request, $id): \Illuminate\Http\RedirectResponse
     {
         Category::find($id)->delete();
 
@@ -84,7 +92,8 @@ class CategoriesController extends Controller
 
     /**
      * @param Request $request
-     * @throws \Illuminate\Validation\ValidationException
+     * @param null $id
+     * @throws ValidationException
      */
     private function getValidate(Request $request, $id = null): void
     {
@@ -96,14 +105,10 @@ class CategoriesController extends Controller
         $this->validate($request, $data);
     }
 
-    private function upload($request)
+    private function upload(Request $request)
     {
-        $image = $request->file('image');
-
-        $imageName = md5(uniqid()) . "." . $image->getClientOriginalExtension();
-
-        $image->move(public_path('uploads'), $imageName);
-
-        return $imageName;
+        return Cloudinary::upload($request->file('image')->getRealPath(), [
+            'folder' => 'Categories'
+        ])->getSecurePath();
     }
 }

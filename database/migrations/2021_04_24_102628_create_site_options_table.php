@@ -15,8 +15,9 @@ class CreateSiteOptionsTable extends Migration
     {
         Schema::create('site_options', function (Blueprint $table) {
             $table->id();
-            $table->string("title");
-            $table->text("content");
+            $table->string('title', 25)->unique();
+            $table->longText('content')->nullable();
+            $table->enum('type', ['array', 'text'])->default('text');
             $table->timestamps();
         });
     }

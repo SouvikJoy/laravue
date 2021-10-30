@@ -6,9 +6,6 @@
                 <inertia-link :href="$route('product.index')" class="nav-link">Products</inertia-link>
             </li>
             <li class="nav-item active">
-                <inertia-link :href="$route('post.index')" class="nav-link">Posts</inertia-link>
-            </li>
-            <li class="nav-item active">
                 <inertia-link :href="$route('category.index')" class="nav-link">Categories</inertia-link>
             </li>
             <li class="nav-item active">

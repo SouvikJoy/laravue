@@ -6,76 +6,63 @@ use App\Models\Product;
 use Illuminate\Database\Eloquent\Model;
 use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
 
 class ProductsController extends Controller
 {
-    public function index()
+    public function index(): \Inertia\Response
     {
         return Inertia::render('Products/Index', [
             "products" => Product::orderBy('id', 'DESC')->paginate(10)
         ]);
     }
 
-    public function create()
+    public function create(): \Inertia\Response
     {
         return Inertia::render('Products/Create');
     }
 
-    public function store(Request $request)
+    /**
+     * @throws ValidationException
+     */
+    public function store(Request $request): \Illuminate\Http\RedirectResponse
     {
         $this->getValidate($request);
 
         $product = new Product();
 
-        $product->title = $request->input('title');
-        $product->slug = $request->input('slug');
-        $product->brief = $request->input('brief');
-        $product->description = $request->input('description');
-        $product->price = $request->input('price');
-
-        if($request->file('image')) {
-            $product->image = $this->upload($request);
-        }
-
-        $product->save();
+        $this->extracted($request, $product);
 
         $request->session()->flash('success', 'Product created successfully!');
 
         return redirect()->route('product.index');
     }
 
-    public function edit($id)
+    public function edit($id): \Inertia\Response
     {
         return Inertia::render('Products/Edit', [
             'product' => Product::findOrFail($id)
         ]);
     }
 
-    public function update(Request $request, $id)
+    /**
+     * @throws ValidationException
+     */
+    public function update(Request $request, $id): \Illuminate\Http\RedirectResponse
     {
         $this->getValidate($request, $id);
 
         $product = Product::find($id);
 
-        $product->title = $request->input('title');
-        $product->slug = $request->input('slug');
-        $product->brief = $request->input('brief');
-        $product->description = $request->input('description');
-        $product->price = $request->input('price');
-
-        if($request->file('image')) {
-            $product->image = $this->upload($request);
-        }
-
-        $product->save();
+        $this->extracted($request, $product);
 
         $request->session()->flash('success', 'Product updated successfully!');
 
         return redirect()->route('product.index');
     }
 
-    public function destroy(Request $request, $id)
+    public function destroy(Request $request, $id): \Illuminate\Http\RedirectResponse
     {
         Product::find($id)->delete();
 
@@ -86,7 +73,8 @@ class ProductsController extends Controller
 
     /**
      * @param Request $request
-     * @throws \Illuminate\Validation\ValidationException
+     * @param null $id
+     * @throws ValidationException
      */
     private function getValidate(Request $request, $id = null): void
     {
@@ -106,5 +94,24 @@ class ProductsController extends Controller
         return Cloudinary::upload($request->file('image')->getRealPath(), [
             'folder' => 'Products'
         ])->getSecurePath();
+    }
+
+    /**
+     * @param Request $request
+     * @param $product
+     */
+    public function extracted(Request $request, $product): void
+    {
+        $product->title = $request->input('title');
+        $product->slug = $request->input('slug');
+        $product->brief = $request->input('brief');
+        $product->description = $request->input('description');
+        $product->price = $request->input('price');
+
+        if ($request->file('image')) {
+            $product->image = $this->upload($request);
+        }
+
+        $product->save();
     }
 }

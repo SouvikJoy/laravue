@@ -45,30 +45,6 @@
                                 </tr>
                                 </tbody>
                             </table>
-
-
-
-<!--                            <h4>{{product.title}}</h4>
-                            <img v-if="product.image_url" width="300" height="250" :src="product.image_url" class="pull-left img-responsive thumb margin10 img-thumbnail">
-                            <article>
-                                <p>
-                                    {{ product.image_url }}
-                                </p>
-                                <p>
-                                    {{ product.slug }}
-                                </p>
-                                <p>
-                                    {{ product.brief }}
-                                </p>
-                                <p>
-                                    {{ product.description }}
-                                </p>
-                                <p>
-                                    {{ product.price }}
-                                </p>
-                            </article>
-                            <inertia-link :href="$route('product.edit', {id: product.id})" class="btn btn-primary pull-right action-btn">Edit Product</inertia-link>
-                            <a href="javascript:void(0);" class="btn btn-warning pull-right action-btn" @click.prevent="deleteProduct(product.id)"><i class="fas fa-trash-alt"></i> Delete Product</a>-->
                         </div>
 
                         <!-- Pagination links-->

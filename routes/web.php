@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
-use App\Http\Controllers\PostsController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\SiteOptionsController;
@@ -36,8 +35,6 @@ Route::post('upload', function (\Illuminate\Http\Request $request) {
     $uploadedFileUrl = \CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary::upload($request->file('file')->getRealPath());
     dd($uploadedFileUrl);
 });
-
-Route::resource('post', PostsController::class);
 
 Route::resource('product', ProductsController::class);
 

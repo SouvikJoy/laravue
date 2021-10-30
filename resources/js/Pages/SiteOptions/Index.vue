@@ -1,51 +1,67 @@
 <template>
         <app-header></app-header>
 
-        <div class="row">
-            <div class="col-md-12" style="margin-top: 20px">
-                <h2 class="text-left">All Siteoptions</h2>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12" style="margin-top: 20px">
+                    <h2 class="text-left">All Siteoptions</h2>
 
-                <errors-and-messages :errors="errors"></errors-and-messages>
+                    <errors-and-messages :errors="errors"></errors-and-messages>
 
-                <div class="nav-item">
-                    <inertia-link :href="$route('siteoption.create')" class="nav-link">Create Siteoption</inertia-link>
-                </div>
-
-                <div v-if="siteoptions.data.length > 0">
-
-                    <div class="col-md-10 article" v-for="siteoption in siteoptions.data" :key="siteoption.id">
-                        <h4>{{siteoption.title}}</h4>
-                        <article>
-                            <p>
-                                {{ siteoption.content }}
-                            </p>
-                        </article>
-                        <inertia-link :href="$route('siteoption.edit', {id: siteoption.id})" class="btn btn-primary pull-right action-btn">Edit Siteoption</inertia-link>
-                        <a href="javascript:void(0);" class="btn btn-warning pull-right action-btn" @click.prevent="deleteSiteoption(siteoption.id)"><i class="fas fa-trash-alt"></i> Delete Siteoption</a>
+                    <div class="nav-item">
+                        <inertia-link :href="$route('siteoption.create')" class="nav-link">Create Siteoption</inertia-link>
                     </div>
 
-                    <!-- Pagination links-->
-                    <nav aria-label="Page navigation" v-if="siteoptions.total > siteoptions.per_page" style="margin-top: 20px">
-                        <ul class="pagination">
-                            <!-- Previous link -->
-                            <li :class="'page-item' + (siteoptions.links[0].url == null ? ' disabled' : '')">
-                                <inertia-link :href="siteoptions.links[0].url == null ? '#' : siteoptions.links[0].url" class="page-link" v-html="siteoptions.links[0].label"></inertia-link>
-                            </li>
+                    <div v-if="siteoptions.data.length > 0">
 
-                            <!-- Numbers -->
-                            <li v-for="item in numberLinks" :class="'page-item' + (item.active ? ' disabled' : '')">
-                                <inertia-link :href="item.active ? '#' : item.url" class="page-link" v-html="item.label"></inertia-link>
-                            </li>
+                        <div>
 
-                            <!-- Next link -->
-                            <li :class="'page-item' + (siteoptions.links[siteoptions.links.length - 1].url == null ? ' disabled' : '')">
-                                <inertia-link :href="siteoptions.links[siteoptions.links.length - 1].url == null ? '#' : siteoptions.links[siteoptions.links.length - 1].url" class="page-link" v-html="siteoptions.links[siteoptions.links.length - 1].label"></inertia-link>
-                            </li>
-                        </ul>
-                    </nav>
-                </div>
-                <div class="text-center" v-else>
-                    No siteoptions found! <inertia-link :href="$route('siteoption.create')">Create Siteoption</inertia-link>
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th scope="col">Index</th>
+                                    <th scope="col">Title</th>
+                                    <th scope="col">Content</th>
+                                    <th scope="col" class="text-center">Actions</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr v-for="(siteoption, index) in siteoptions.data" :key="index">
+                                    <th scope="row">{{ index }}</th>
+                                    <td>{{siteoption.title}}</td>
+                                    <td>{{siteoption.content}}</td>
+                                    <td>
+                                        <inertia-link :href="$route('siteoption.edit', {id: siteoption.id})" class="btn btn-primary pull-right action-btn">Edit SiteOptions</inertia-link>
+                                        <a href="javascript:void(0);" class="btn btn-warning pull-right action-btn" @click.prevent="deleteSiteoption(siteoption.id)"><i class="fas fa-trash-alt"></i> Delete Product</a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Pagination links-->
+                        <nav aria-label="Page navigation" v-if="siteoptions.total > siteoptions.per_page" style="margin-top: 20px">
+                            <ul class="pagination">
+                                <!-- Previous link -->
+                                <li :class="'page-item' + (siteoptions.links[0].url == null ? ' disabled' : '')">
+                                    <inertia-link :href="siteoptions.links[0].url == null ? '#' : siteoptions.links[0].url" class="page-link" v-html="siteoptions.links[0].label"></inertia-link>
+                                </li>
+
+                                <!-- Numbers -->
+                                <li v-for="item in numberLinks" :class="'page-item' + (item.active ? ' disabled' : '')">
+                                    <inertia-link :href="item.active ? '#' : item.url" class="page-link" v-html="item.label"></inertia-link>
+                                </li>
+
+                                <!-- Next link -->
+                                <li :class="'page-item' + (siteoptions.links[siteoptions.links.length - 1].url == null ? ' disabled' : '')">
+                                    <inertia-link :href="siteoptions.links[siteoptions.links.length - 1].url == null ? '#' : siteoptions.links[siteoptions.links.length - 1].url" class="page-link" v-html="siteoptions.links[siteoptions.links.length - 1].label"></inertia-link>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                    <div class="text-center" v-else>
+                        No siteoptions found! <inertia-link :href="$route('siteoption.create')">Create Siteoption</inertia-link>
+                    </div>
                 </div>
             </div>
         </div>
