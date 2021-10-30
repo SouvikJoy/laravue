@@ -11,6 +11,9 @@
             <li class="nav-item active">
                 <inertia-link :href="$route('siteoption.index')" class="nav-link">Site Options</inertia-link>
             </li>
+            <li class="nav-item active">
+                <inertia-link :href="$route('service.index')" class="nav-link">Services</inertia-link>
+            </li>
         </ul>
     </div>
 </template>

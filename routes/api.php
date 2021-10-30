@@ -32,3 +32,8 @@ Route::middleware('api')->get('/siteoptions', function (Request $request) {
     $siteoptions = \App\Models\SiteOption::all()->toArray();
     return array_reverse($siteoptions);
 });
+
+Route::middleware('api')->get('/services', function (Request $request) {
+    $services = \App\Models\Service::all()->toArray();
+    return array_reverse($services);
+});

@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\SiteOptionsController;
+use App\Http\Controllers\ServicesController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -41,6 +42,8 @@ Route::resource('product', ProductsController::class);
 Route::resource('category', CategoriesController::class);
 
 Route::resource('siteoption', SiteOptionsController::class);
+
+Route::resource('service', ServicesController::class);
 
 Route::middleware('auth')->get('/', function () {
     return Inertia::render('Dashboard');
