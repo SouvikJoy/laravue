@@ -14,8 +14,41 @@
 
                     <div v-if="products.data.length > 0">
 
-                        <div class="col-md-10 article" v-for="product in products.data" :key="product.id">
-                            <h4>{{product.title}}</h4>
+                        <div>
+
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th scope="col">Index</th>
+                                    <th scope="col">Title</th>
+                                    <th scope="col">Slug</th>
+                                    <th scope="col">Brief</th>
+                                    <th scope="col">Description</th>
+                                    <th scope="col">Price</th>
+                                    <th scope="col">Image</th>
+                                    <th scope="col" class="text-center">Actions</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr v-for="(product, index) in products.data" :key="index">
+                                    <th scope="row">{{ index }}</th>
+                                    <td>{{product.title}}</td>
+                                    <td>{{product.slug}}</td>
+                                    <td>{{product.brief}}</td>
+                                    <td>{{product.description}}</td>
+                                    <td>{{product.price}}</td>
+                                    <td><img v-if="product.image_url" width="100" height="80" :src="product.image_url" class="pull-left img-responsive thumb margin10 img-thumbnail"></td>
+                                    <td>
+                                        <inertia-link :href="$route('product.edit', {id: product.id})" class="btn btn-primary pull-right action-btn">Edit Product</inertia-link>
+                                        <a href="javascript:void(0);" class="btn btn-warning pull-right action-btn" @click.prevent="deleteProduct(product.id)"><i class="fas fa-trash-alt"></i> Delete Product</a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+
+
+
+<!--                            <h4>{{product.title}}</h4>
                             <img v-if="product.image_url" width="300" height="250" :src="product.image_url" class="pull-left img-responsive thumb margin10 img-thumbnail">
                             <article>
                                 <p>
@@ -35,7 +68,7 @@
                                 </p>
                             </article>
                             <inertia-link :href="$route('product.edit', {id: product.id})" class="btn btn-primary pull-right action-btn">Edit Product</inertia-link>
-                            <a href="javascript:void(0);" class="btn btn-warning pull-right action-btn" @click.prevent="deleteProduct(product.id)"><i class="fas fa-trash-alt"></i> Delete Product</a>
+                            <a href="javascript:void(0);" class="btn btn-warning pull-right action-btn" @click.prevent="deleteProduct(product.id)"><i class="fas fa-trash-alt"></i> Delete Product</a>-->
                         </div>
 
                         <!-- Pagination links-->
@@ -109,9 +142,4 @@ export default {
         margin-left: 12px;
         font-size: 13px;
     }
-
-    .article {
-        margin-top: 20px;
-    }
-
 </style>

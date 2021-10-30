@@ -60,7 +60,7 @@ import {Inertia} from "@inertiajs/inertia";
 import {computed, inject} from "vue";
 
 export default {
-    name: "SiteOption",
+    name: "SiteOptions",
     components: {
         ErrorsAndMessages,
         AppHeader

@@ -2,6 +2,10 @@
     font-size: 14px;
 }
 
+.table td, .table th {
+    vertical-align: middle;
+}
+
 .logout-link {
     border: none;
     background: none;
